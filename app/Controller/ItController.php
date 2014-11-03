@@ -19,8 +19,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-App::uses('Controller', 'Controller');
-App::uses('Form2Helper', 'View/Helper');
+App::uses('AppController', 'Controller');
 
 /**
  * Application Controller
@@ -31,10 +30,18 @@ App::uses('Form2Helper', 'View/Helper');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
-	public $helpers = array(
-		'Form' => array(
-			'className' => 'Form2',
-		),
+class ItController extends AppController {
+	public $name = 'It';
+	public $uses = array(
+		'It'
 	);
+
+	public function form() {
+		if ($this->request->is('post')) {
+			$this->It->set($this->request->data[$this->It->alias]);
+			if ($this->It->validates()) {
+				return $this->render('finish');
+			}
+		}
+	}
 }
